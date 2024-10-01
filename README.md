@@ -1,3 +1,3 @@
 # JDAnderson
-
-i added text and a emoji ###🐵
+### ![alt text](image.png)
+i added text and a emoji 🐵
