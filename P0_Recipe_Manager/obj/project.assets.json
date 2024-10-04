@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\jdand\\Downloads\\revatureTraining\\JDAnderson\\P0_ExpenseManager\\P0_ExpenseManager.csproj",
-      "projectName": "P0_ExpenseManager",
-      "projectPath": "C:\\Users\\jdand\\Downloads\\revatureTraining\\JDAnderson\\P0_ExpenseManager\\P0_ExpenseManager.csproj",
+      "projectUniqueName": "C:\\Users\\jdand\\Downloads\\revatureTraining\\JDAnderson\\P0_Recipe_Manager\\P0_Recipe_Manager.csproj",
+      "projectName": "P0_Recipe_Manager",
+      "projectPath": "C:\\Users\\jdand\\Downloads\\revatureTraining\\JDAnderson\\P0_Recipe_Manager\\P0_Recipe_Manager.csproj",
       "packagesPath": "C:\\Users\\jdand\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\jdand\\Downloads\\revatureTraining\\JDAnderson\\P0_ExpenseManager\\obj\\",
+      "outputPath": "C:\\Users\\jdand\\Downloads\\revatureTraining\\JDAnderson\\P0_Recipe_Manager\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\jdand\\AppData\\Roaming\\NuGet\\NuGet.Config"
