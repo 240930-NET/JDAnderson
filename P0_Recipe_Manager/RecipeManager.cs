@@ -43,6 +43,11 @@ class RecipeManager
         AllRecipes.Add(recipe); 
     }
 
+    public static async void Save(List<Recipe> recipe) { 
+        await Data.AsyncSerializeData(recipe); 
+    }
+    
+
 
    
 }

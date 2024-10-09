@@ -8,6 +8,7 @@ class Program
     static void Main(string[] args)
     {
 
+        List<Recipe> receipesStored = Data.DeserializeRecipes(); 
 
         UI.AppInfo();
 
@@ -27,14 +28,16 @@ class Program
                     break;
                 case 2:
                     Console.WriteLine("\n\t2: View all recipes");
-                    Console.WriteLine(RecipeManager.AllRecipes);
-                    UI.DisplayAllRecipes();
+                    
+                    UI.DisplayAllRecipes(receipesStored);
                     break;
                 case 3:
                     Console.WriteLine("\n\tSearch Recipes");
+
                     break;
                 case 4:
-                    Console.WriteLine("\n Save Recipes");
+                    Console.WriteLine("\n\tEdit Recipes");
+                
                     break;
 
                 case 5:
@@ -42,8 +45,9 @@ class Program
                     break;
                 case 6:
                     Console.WriteLine("\n Save Recipes");
+                     RecipeManager.Save(RecipeManager.AllRecipes);
                     break;
-               
+
 
                 case 9:
                     Console.WriteLine("\n\t9: Exit Application");

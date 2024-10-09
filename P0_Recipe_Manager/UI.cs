@@ -16,7 +16,7 @@ class UI
         Console.WriteLine("\t3: Search Recipes");
         Console.WriteLine("\t4: Edit Recipe");
         Console.WriteLine("\t5: Delete Recipe");
-        Console.WriteLine("\t6: Save Recipes"); 
+        Console.WriteLine("\t6: Save Recipes");
         Console.WriteLine("\t9: Exit Application");
     }
 
@@ -44,7 +44,7 @@ class UI
 
     public static Recipe GetRecipeInfo()
     {
-
+        Console.WriteLine("************************\n\n");
         Console.Write("Type recipe name: ");
         string? recipeName = Console.ReadLine();
 
@@ -54,11 +54,14 @@ class UI
         Console.Write("Number of Servings: ");
         int servings = int.Parse(Console.ReadLine() ?? "0");
 
-        Console.Write("Enter the instructions (press the enter key when done)");
+        Console.Write("Enter the instructions (press the enter key when done): ");
         string instructions = RecipeManager.getMultlineInput();
 
-        Console.Write("Enter ingredients (comma-separated e.g. '2 cups of flour, 1 tsp of salt'):");
+        Console.Write("Enter ingredients (comma-separated e.g. '2 cups of flour, 1 tsp of salt'): ");
         string ingredientsEntered = Console.ReadLine() ?? "";
+
+        Console.WriteLine("\n\n************************\n   ");
+
 
         var recipe = new Recipe()
         {
@@ -73,7 +76,7 @@ class UI
 
     public static void DisplayRecipe(Recipe recipe)
     {
-        
+        Console.WriteLine("-------------------------\n");
         Console.WriteLine("New recipe was added!!\n\n");
         Console.WriteLine("Recipe Information Below\n");
         Console.WriteLine($"Name: {recipe.Name}");
@@ -84,11 +87,12 @@ class UI
             Console.WriteLine($"o {ingredient}");
         }
         Console.WriteLine($"Instructions\n {recipe.Instructions}");
+        Console.WriteLine("\n-------------------------\n");
     }
 
-    public static void DisplayAllRecipes()
+    public static void DisplayAllRecipes(List<Recipe> recipes)
     {
-        if (RecipeManager.AllRecipes.Count == 0)
+        if (recipes.Count == 0)
         {
             Console.WriteLine("\n\nNo Recipes have been entered.\n In order to view recipes please enter option again  to enter a receipe\n\n");
         }
@@ -96,13 +100,13 @@ class UI
         {
             int recipeNum = 1;
 
-            foreach (Recipe recipe in RecipeManager.AllRecipes)
+            foreach (Recipe recipe in recipes)
             {
                 Console.WriteLine($"Recipe {recipeNum}\n");
                 DisplayRecipe(recipe);
                 Console.WriteLine();
 
-                recipeNum++; 
+                recipeNum++;
             }
         }
     }
