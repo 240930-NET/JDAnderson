@@ -46,12 +46,12 @@ public class UI
         Console.Write("Type recipe name: ");
         string? recipeName = Console.ReadLine();
 
-        Console.Write("Enter the cooking time (in minutes): ");
+        Console.Write("\n\nEnter the cooking time (in minutes): ");
         string cookingTime = Console.ReadLine() ?? "0";
 
         Console.Write("Number of Servings: ");
         int servings = int.Parse(Console.ReadLine() ?? "0");
-
+        Console.WriteLine("\n\nPress enter twice to submit Instructions");
         Console.Write("Enter the instructions (press the enter key when done): ");
         string instructions = RecipeManager.GetMultlineInput();
 
