@@ -6,17 +6,15 @@ class UI
     public static void AppInfo()
     {
         Console.WriteLine("hello friend welcome to your own a recipe manager appication!");
-        Console.WriteLine("Choose on of the options:\n ");
+        Console.WriteLine("Choose one of the options:\n ");
     }
     public static void DisplayOptions()
     {
 
         Console.WriteLine("\t1: Add a New Recipe");
         Console.WriteLine("\t2: View all recipes");
-        Console.WriteLine("\t3: Search Recipes");
-        Console.WriteLine("\t4: Edit Recipe");
-        Console.WriteLine("\t5: Delete Recipe");
-        Console.WriteLine("\t6: Save Recipes");
+        Console.WriteLine("\t3: Save Recipes");
+        Console.WriteLine("\t4: Delete Recipe");
         Console.WriteLine("\t9: Exit Application");
     }
 
@@ -24,7 +22,7 @@ class UI
     // method that returns the value that the user enters 
     public static int GetChoice()
     {
-        string? userInput = Console.ReadLine();
+        string? userInput = Console.ReadLine() ?? " ";
 
         try
         {
@@ -55,7 +53,7 @@ class UI
         int servings = int.Parse(Console.ReadLine() ?? "0");
 
         Console.Write("Enter the instructions (press the enter key when done): ");
-        string instructions = RecipeManager.getMultlineInput();
+        string instructions = RecipeManager.GetMultlineInput();
 
         Console.Write("Enter ingredients (comma-separated e.g. '2 cups of flour, 1 tsp of salt'): ");
         string ingredientsEntered = Console.ReadLine() ?? "";
@@ -76,7 +74,7 @@ class UI
 
     public static void DisplayRecipe(Recipe recipe)
     {
-        Console.WriteLine("-------------------------\n");
+        Console.WriteLine("\n\n-------------------------\n");
         Console.WriteLine("New recipe was added!!\n\n");
         Console.WriteLine("Recipe Information Below\n");
         Console.WriteLine($"Name: {recipe.Name}");
@@ -90,11 +88,17 @@ class UI
         Console.WriteLine("\n-------------------------\n");
     }
 
-    public static void DisplayAllRecipes(List<Recipe> recipes)
+    public static void DisplayAllRecipes(List<Recipe>? recipes)
     {
+        if (recipes == null)
+        {
+            Console.WriteLine("\n\nError: Recipe list is not initialized.\n");
+            return;
+        }
+
         if (recipes.Count == 0)
         {
-            Console.WriteLine("\n\nNo Recipes have been entered.\n In order to view recipes please enter option again  to enter a receipe\n\n");
+            Console.WriteLine("\n\nNo Recipes have been entered.\nIn order to view recipes, please enter option again to enter a recipe.\n\n");
         }
         else
         {
@@ -110,7 +114,4 @@ class UI
             }
         }
     }
-
-
-
 }

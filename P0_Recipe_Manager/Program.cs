@@ -7,59 +7,69 @@ class Program
 {
     static void Main(string[] args)
     {
+        // Load existing recipes from file
+        List<Recipe> receipesStored = Data.DeserializeRecipes();
 
-        List<Recipe> receipesStored = Data.DeserializeRecipes(); 
-
+        // Display application information
         UI.AppInfo();
 
+        // Display menu options
         UI.DisplayOptions();
+        // Get user's initial choice
         int optionPicked = UI.GetChoice();
 
-        while (optionPicked != 9)
+        // Main application loop
+        while (optionPicked != 9) // 9 is the exit option
         {
             switch (optionPicked)
             {
                 case 1:
+                    // Add a new recipe
                     Console.WriteLine("\n\t1: Add a New Recipe");
                     Recipe newRecipe = UI.GetRecipeInfo();
-                    RecipeManager.AddRecipe(newRecipe);
+                    RecipeManager.AddRecipe(receipesStored, newRecipe);
                     UI.DisplayRecipe(newRecipe);
-
                     break;
+
                 case 2:
-                    Console.WriteLine("\n\t2: View all recipes");
-                    
+                    // Display all recipes
                     UI.DisplayAllRecipes(receipesStored);
                     break;
+
                 case 3:
-                    Console.WriteLine("\n\tSearch Recipes");
-
+                    // Save recipes to file
+                    if (receipesStored != null && receipesStored.Count > 0)
+                    {
+                        RecipeManager.Save(receipesStored);
+                        Console.WriteLine("Recipes saved successfully.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("No recipes to save. The recipe list is empty.");
+                    }
                     break;
+
                 case 4:
-                    Console.WriteLine("\n\tEdit Recipes");
-                
+                    // Delete a recipe
+                    Console.WriteLine("\n\t4: Delete Recipe");
+                    RecipeManager.RemoveRecipe(receipesStored);
                     break;
-
-                case 5:
-                    Console.WriteLine("\n\t5: Delete Recipe");
-                    break;
-                case 6:
-                    Console.WriteLine("\n Save Recipes");
-                     RecipeManager.Save(RecipeManager.AllRecipes);
-                    break;
-
 
                 case 9:
+                    // Exit application
                     Console.WriteLine("\n\t9: Exit Application");
                     break;
+
                 default:
+                    // Handle invalid options
                     Console.WriteLine("Invalid option. Please try again.");
                     break;
             }
-            UI.DisplayOptions();
-            // Get the next choice
-            optionPicked = UI.GetChoice();
 
+            // Display menu options again
+            UI.DisplayOptions();
+            // Get the next user choice
+            optionPicked = UI.GetChoice();
         }
     }
 }
