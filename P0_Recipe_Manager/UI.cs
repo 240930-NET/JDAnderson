@@ -1,6 +1,6 @@
 using System.Text;
 
-class UI
+public class UI
 {
 
     public static void AppInfo()

@@ -1,6 +1,6 @@
 using System.Text;
 
-class RecipeManager
+public class RecipeManager
 {
     // Method to get multi-line input from the user
     public static string GetMultlineInput()

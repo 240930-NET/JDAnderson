@@ -1,5 +1,5 @@
 // Defines the Recipe class to represent a single recipe
-class Recipe 
+public class Recipe 
 { 
     // Property to store the name of the recipe
     // Nullable to allow for recipes that might not have a name set yet
