@@ -1,7 +1,9 @@
 ﻿namespace RecipeManager.Models;
 // Defines the Recipe class to represent a single recipe
 public class Recipe
+
 {
+    public int RecipeId {get; set;}
     // Property to store the name of the recipe
     // Nullable to allow for recipes that might not have a name set yet
     public string? Name { get; set; }

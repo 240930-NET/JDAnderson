@@ -1,23 +1,22 @@
-
 using Microsoft.EntityFrameworkCore;
 using RecipeManager.Data;
 using RecipeManager.Models;
-using RecipeManager.Tests;
+using RecipeManager.API;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-
+builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Configure our DbContext and Repos here 
-string connectionString = builder.Configuration["ConnectionString"]!;
+string connectionString = builder.Configuration.GetConnectionString("recipesStored");
 builder.Services.AddDbContext<RecipeContext>(options => options.UseSqlServer(connectionString));
 
 // set up dependency lifecycles here 
 builder.Services.AddScoped<IRecipeRepo, RecipeRepo>(); 
-
+builder.Services.AddScoped<IRecipeService, RecipeService>(); 
 
 var app = builder.Build();
 
@@ -25,7 +24,13 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "RecipeManager API v1"));
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthorization();
+
+app.MapControllers();
+
+app.Run();

@@ -1,17 +1,21 @@
-﻿namespace RecipeManager.Data;
-using Microsoft.EntityFrameworkCore; 
-using RecipeManager.Models; 
+﻿using Microsoft.EntityFrameworkCore;
+using RecipeManager.Models;
+
+namespace RecipeManager.Data;
+
 public class RecipeContext : DbContext
 {
-    public virtual DbSet<Recipe> Recipes {get; set;}
+    public DbSet<Recipe> Recipes { get; set; }
 
-
-    // set up constructor 
-    public RecipeContext() : base() { }
-
-    // for connection string 
     public RecipeContext(DbContextOptions<RecipeContext> options) : base(options)
     {
+    }
 
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        
+
+        // You can add any additional configuration here, such as:
+        // modelBuilder.Entity<Recipe>().Property(r => r.Name).IsRequired();
     }
 }
