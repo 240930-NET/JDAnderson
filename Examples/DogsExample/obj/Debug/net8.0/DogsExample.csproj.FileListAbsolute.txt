@@ -1,0 +1,15 @@
+C:\Users\jdand\Downloads\revatureTraining\JDAnderson\Examples\DogsExample\bin\Debug\net8.0\DogsExample.exe
+C:\Users\jdand\Downloads\revatureTraining\JDAnderson\Examples\DogsExample\bin\Debug\net8.0\DogsExample.deps.json
+C:\Users\jdand\Downloads\revatureTraining\JDAnderson\Examples\DogsExample\bin\Debug\net8.0\DogsExample.runtimeconfig.json
+C:\Users\jdand\Downloads\revatureTraining\JDAnderson\Examples\DogsExample\bin\Debug\net8.0\DogsExample.dll
+C:\Users\jdand\Downloads\revatureTraining\JDAnderson\Examples\DogsExample\bin\Debug\net8.0\DogsExample.pdb
+C:\Users\jdand\Downloads\revatureTraining\JDAnderson\Examples\DogsExample\obj\Debug\net8.0\DogsExample.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\jdand\Downloads\revatureTraining\JDAnderson\Examples\DogsExample\obj\Debug\net8.0\DogsExample.AssemblyInfoInputs.cache
+C:\Users\jdand\Downloads\revatureTraining\JDAnderson\Examples\DogsExample\obj\Debug\net8.0\DogsExample.AssemblyInfo.cs
+C:\Users\jdand\Downloads\revatureTraining\JDAnderson\Examples\DogsExample\obj\Debug\net8.0\DogsExample.csproj.CoreCompileInputs.cache
+C:\Users\jdand\Downloads\revatureTraining\JDAnderson\Examples\DogsExample\obj\Debug\net8.0\DogsExample.sourcelink.json
+C:\Users\jdand\Downloads\revatureTraining\JDAnderson\Examples\DogsExample\obj\Debug\net8.0\DogsExample.dll
+C:\Users\jdand\Downloads\revatureTraining\JDAnderson\Examples\DogsExample\obj\Debug\net8.0\refint\DogsExample.dll
+C:\Users\jdand\Downloads\revatureTraining\JDAnderson\Examples\DogsExample\obj\Debug\net8.0\DogsExample.pdb
+C:\Users\jdand\Downloads\revatureTraining\JDAnderson\Examples\DogsExample\obj\Debug\net8.0\DogsExample.genruntimeconfig.cache
+C:\Users\jdand\Downloads\revatureTraining\JDAnderson\Examples\DogsExample\obj\Debug\net8.0\ref\DogsExample.dll

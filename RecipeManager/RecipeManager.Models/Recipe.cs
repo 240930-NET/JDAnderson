@@ -23,9 +23,7 @@ public class Recipe
 
     // Constructor for the Recipe class
     // Initializes the Ingredients list to an empty list
-    public Recipe(){
-        
-    }
+    
     public Recipe()
     {
         Ingredients = [];

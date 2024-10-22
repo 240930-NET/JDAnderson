@@ -10,10 +10,11 @@
 using System;
 using System.Reflection;
 
+[assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("e4247a31-b051-481b-a5b9-06885df9818f")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("RecipeManager.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e9dae520249db85f018c179e195bd6558f14d46a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e51f4dd07727715b5549395f654e74287ddbfeb6")]
 [assembly: System.Reflection.AssemblyProductAttribute("RecipeManager.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RecipeManager.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

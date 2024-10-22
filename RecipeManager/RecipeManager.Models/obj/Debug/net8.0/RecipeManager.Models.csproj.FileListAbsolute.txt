@@ -1,0 +1,12 @@
+C:\Users\jdand\Downloads\revatureTraining\JDAnderson\RecipeManager\RecipeManager.Models\bin\Debug\net8.0\RecipeManager.Models.deps.json
+C:\Users\jdand\Downloads\revatureTraining\JDAnderson\RecipeManager\RecipeManager.Models\bin\Debug\net8.0\RecipeManager.Models.dll
+C:\Users\jdand\Downloads\revatureTraining\JDAnderson\RecipeManager\RecipeManager.Models\bin\Debug\net8.0\RecipeManager.Models.pdb
+C:\Users\jdand\Downloads\revatureTraining\JDAnderson\RecipeManager\RecipeManager.Models\obj\Debug\net8.0\RecipeManager.Models.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\jdand\Downloads\revatureTraining\JDAnderson\RecipeManager\RecipeManager.Models\obj\Debug\net8.0\RecipeManager.Models.AssemblyInfoInputs.cache
+C:\Users\jdand\Downloads\revatureTraining\JDAnderson\RecipeManager\RecipeManager.Models\obj\Debug\net8.0\RecipeManager.Models.AssemblyInfo.cs
+C:\Users\jdand\Downloads\revatureTraining\JDAnderson\RecipeManager\RecipeManager.Models\obj\Debug\net8.0\RecipeManager.Models.csproj.CoreCompileInputs.cache
+C:\Users\jdand\Downloads\revatureTraining\JDAnderson\RecipeManager\RecipeManager.Models\obj\Debug\net8.0\RecipeManager.Models.sourcelink.json
+C:\Users\jdand\Downloads\revatureTraining\JDAnderson\RecipeManager\RecipeManager.Models\obj\Debug\net8.0\RecipeManager.Models.dll
+C:\Users\jdand\Downloads\revatureTraining\JDAnderson\RecipeManager\RecipeManager.Models\obj\Debug\net8.0\refint\RecipeManager.Models.dll
+C:\Users\jdand\Downloads\revatureTraining\JDAnderson\RecipeManager\RecipeManager.Models\obj\Debug\net8.0\RecipeManager.Models.pdb
+C:\Users\jdand\Downloads\revatureTraining\JDAnderson\RecipeManager\RecipeManager.Models\obj\Debug\net8.0\ref\RecipeManager.Models.dll
