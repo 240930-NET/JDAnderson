@@ -25,7 +25,6 @@
   <ItemGroup>
     <ProjectReference Include="..\RecipeManager.Data\RecipeManager.Data.csproj" />
     <ProjectReference Include="..\RecipeManager.Models\RecipeManager.Models.csproj" />
-    <ProjectReference Include="..\RecipeManager.Tests\RecipeManager.Tests.csproj" />
   </ItemGroup>
 
 </Project>

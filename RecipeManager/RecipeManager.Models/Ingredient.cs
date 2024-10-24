@@ -10,5 +10,5 @@ public class Ingredient {
     public int RecipeId {get; set;}
 
     [Required]
-    public Recipe? Recipe {get; set;}
+    public Recipe? Recipes {get; set;}
 }

@@ -11,12 +11,15 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Configure our DbContext and Repos here 
-string connectionString = builder.Configuration.GetConnectionString("recipesStored");
+string connectionString = builder.Configuration.GetConnectionString("recipesStored")!;
 builder.Services.AddDbContext<RecipeContext>(options => options.UseSqlServer(connectionString));
 
 // set up dependency lifecycles here 
 builder.Services.AddScoped<IRecipeRepo, RecipeRepo>(); 
-builder.Services.AddScoped<IRecipeService, RecipeService>(); 
+builder.Services.AddScoped<IRecipeService, RecipeService>();
+
+// Register AutoMapper in the dependency injection 
+// builder.Services.AddAutoMapper(typeof(Mapping))
 
 var app = builder.Build();
 
