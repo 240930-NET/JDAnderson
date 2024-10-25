@@ -10,3 +10,4 @@ C:\Users\jdand\Downloads\revatureTraining\JDAnderson\RecipeManager\RecipeManager
 C:\Users\jdand\Downloads\revatureTraining\JDAnderson\RecipeManager\RecipeManager.Models\obj\Debug\net8.0\refint\RecipeManager.Models.dll
 C:\Users\jdand\Downloads\revatureTraining\JDAnderson\RecipeManager\RecipeManager.Models\obj\Debug\net8.0\RecipeManager.Models.pdb
 C:\Users\jdand\Downloads\revatureTraining\JDAnderson\RecipeManager\RecipeManager.Models\obj\Debug\net8.0\ref\RecipeManager.Models.dll
+C:\Users\jdand\Downloads\revatureTraining\JDAnderson\RecipeManager\RecipeManager.Models\obj\Debug\net8.0\RecipeManager.Models.csproj.AssemblyReference.cache

@@ -6,7 +6,7 @@ namespace RecipeManager.Data;
 public class RecipeContext : DbContext
 {
     public DbSet<Recipe> Recipes { get; set; }
-    public DbSet<Ingredient> Ingredients {get; set;}
+    public DbSet<Ingredient> Ingredients { get; set; }
 
     public RecipeContext(DbContextOptions<RecipeContext> options) : base(options)
     {
@@ -42,6 +42,30 @@ public class RecipeContext : DbContext
                 CookingTime = "15 minutes",
                 Servings = 24
             }
+        );
+
+        // Seed data for Ingredients
+        modelBuilder.Entity<Ingredient>().HasData(
+            // Ingredients for Spaghetti Carbonara
+            new Ingredient { IngredientId = 1, Name = "Spaghetti", Quantity = "400g", RecipeId = 1 },
+            new Ingredient { IngredientId = 2, Name = "Bacon", Quantity = "200g", RecipeId = 1 },
+            new Ingredient { IngredientId = 3, Name = "Eggs", Quantity = "4", RecipeId = 1 },
+            new Ingredient { IngredientId = 4, Name = "Parmesan cheese", Quantity = "100g", RecipeId = 1 },
+
+            // Ingredients for Classic Margherita Pizza
+            new Ingredient { IngredientId = 5, Name = "Pizza dough", Quantity = "1", RecipeId = 2 },
+            new Ingredient { IngredientId = 6, Name = "Tomato sauce", Quantity = "200g", RecipeId = 2 },
+            new Ingredient { IngredientId = 7, Name = "Fresh mozzarella", Quantity = "200g", RecipeId = 2 },
+            new Ingredient { IngredientId = 8, Name = "Fresh basil leaves", Quantity = "10-12", RecipeId = 2 },
+
+            // Ingredients for Chocolate Chip Cookies
+            new Ingredient { IngredientId = 9, Name = "Flour", Quantity = "280g", RecipeId = 3 },
+            new Ingredient { IngredientId = 10, Name = "Butter", Quantity = "230g", RecipeId = 3 },
+            new Ingredient { IngredientId = 11, Name = "Brown sugar", Quantity = "200g", RecipeId = 3 },
+            new Ingredient { IngredientId = 12, Name = "White sugar", Quantity = "100g", RecipeId = 3 },
+            new Ingredient { IngredientId = 13, Name = "Eggs", Quantity = "2", RecipeId = 3 },
+            new Ingredient { IngredientId = 14, Name = "Vanilla extract", Quantity = "1 tsp", RecipeId = 3 },
+            new Ingredient { IngredientId = 15, Name = "Chocolate chips", Quantity = "300g", RecipeId = 3 }
         );
     }
 }

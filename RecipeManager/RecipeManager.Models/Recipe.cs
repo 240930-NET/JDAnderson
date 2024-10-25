@@ -1,24 +1,14 @@
-﻿namespace RecipeManager.Models;
-
-public class Recipe
+﻿namespace RecipeManager.Models
 {
-    public int RecipeId { get; set; }
-
-    public string? Name { get; set; }
-
-    public string? Instructions { get; set; }
-
-    public string CookingTime { get; set; } = string.Empty;
-
-    public int Servings { get; set; }
-
-    public List<Ingredient> Ingredients {get; set;}
-
-    // This property is not in the database table
-    // public List<string> Ingredients { get; set; }
-
-    public Recipe()
+    public class Recipe
     {
-        Ingredients = [];
+        public int RecipeId { get; set; }
+        public string? Name { get; set; }
+        public string? Instructions { get; set; }
+        public string? CookingTime { get; set; }
+        public int Servings { get; set; }
+        public List<Ingredient> Ingredients { get; set; } = new List<Ingredient>();
     }
+
+   
 }

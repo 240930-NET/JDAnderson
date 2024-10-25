@@ -19,7 +19,7 @@ builder.Services.AddScoped<IRecipeRepo, RecipeRepo>();
 builder.Services.AddScoped<IRecipeService, RecipeService>();
 
 // Register AutoMapper in the dependency injection 
-// builder.Services.AddAutoMapper(typeof(Mapping))
+builder.Services.AddAutoMapper(typeof(MappingProfile)); 
 
 var app = builder.Build();
 
