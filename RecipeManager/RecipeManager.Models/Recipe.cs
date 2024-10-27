@@ -1,14 +1,16 @@
-﻿namespace RecipeManager.Models
+﻿using System.Collections.Generic;
+
+namespace RecipeManager.Models
 {
     public class Recipe
     {
         public int RecipeId { get; set; }
-        public string? Name { get; set; }
-        public string? Instructions { get; set; }
-        public string? CookingTime { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string Instructions { get; set; } = string.Empty;
+        public string CookingTime { get; set; } = string.Empty;
         public int Servings { get; set; }
-        public List<Ingredient> Ingredients { get; set; } = new List<Ingredient>();
+        public ICollection<Ingredient> Ingredients { get; set; } = new List<Ingredient>();
     }
 
-   
+
 }

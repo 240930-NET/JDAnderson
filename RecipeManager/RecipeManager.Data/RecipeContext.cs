@@ -16,6 +16,13 @@ public class RecipeContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
+        // Configure the one-to-many relationship between Recipe and Ingredient
+        modelBuilder.Entity<Recipe>()
+            .HasMany(r => r.Ingredients) // A recipe has many ingredients
+            .WithOne(i => i.Recipes) // Each ingredient belongs to one recipe
+            .HasForeignKey(i => i.RecipeId) // Foreign key in Ingredient
+            .OnDelete(DeleteBehavior.Cascade); // Delete ingredients if the recipe is deleted
+
         // Seed data for Recipes
         modelBuilder.Entity<Recipe>().HasData(
             new Recipe
@@ -47,7 +54,7 @@ public class RecipeContext : DbContext
         // Seed data for Ingredients
         modelBuilder.Entity<Ingredient>().HasData(
             // Ingredients for Spaghetti Carbonara
-            new Ingredient { IngredientId = 1, Name = "Spaghetti", Quantity = "400g", RecipeId = 1 },
+            new Ingredient { IngredientId = 1, Name = "Noodles", Quantity = "400g", RecipeId = 1 },
             new Ingredient { IngredientId = 2, Name = "Bacon", Quantity = "200g", RecipeId = 1 },
             new Ingredient { IngredientId = 3, Name = "Eggs", Quantity = "4", RecipeId = 1 },
             new Ingredient { IngredientId = 4, Name = "Parmesan cheese", Quantity = "100g", RecipeId = 1 },

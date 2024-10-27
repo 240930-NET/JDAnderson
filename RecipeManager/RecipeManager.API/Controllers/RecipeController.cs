@@ -1,11 +1,9 @@
+using RecipeManager.Models;
 using RecipeManager.Models.DTOs;
-using RecipeManager.Models; 
 using Microsoft.AspNetCore.Mvc;
 using RecipeManager.API.Services;
 using AutoMapper;
-using System.ComponentModel.DataAnnotations;
-
-namespace RecipeManager.API.Controllers;
+namespace RecipeManager.API;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -21,17 +19,16 @@ public class RecipeController : ControllerBase
     }
 
     [HttpGet]
-    public ActionResult<IEnumerable<RecipeDto>> GetRecipes()
+    public async Task<ActionResult<IEnumerable<Recipe>>> GetRecipes()
     {
         try
         {
-            var recipes = _recipeService.GetAllRecipes();
+            var recipes = await _recipeService.GetAllRecipes();
             if (recipes == null || !recipes.Any())
             {
                 return NotFound("No recipes found.");
             }
-            var recipeDtos = _mapper.Map<IEnumerable<RecipeDto>>(recipes);
-            return Ok(recipeDtos);
+            return Ok(recipes);
         }
         catch (Exception error)
         {
@@ -40,26 +37,42 @@ public class RecipeController : ControllerBase
     }
 
     [HttpGet("getRecipeById/{id}")]
-    public IActionResult GetRecipeById(int id)
+    public async Task<IActionResult> GetRecipeById(int id)
     {
         try
         {
-            var recipeFound = _recipeService.GetRecipeById(id);
+            var recipeFound = await _recipeService.GetRecipeById(id);
             if (recipeFound == null)
             {
-                return NotFound($"Recipe with Id {id} not found.");
+                return NotFound($"Recipe with Id {id} not found."); // Fixed string interpolation
             }
-            var recipeDto = _mapper.Map<RecipeDto>(recipeFound);
-            return Ok(recipeDto);
+            return Ok(recipeFound);
         }
         catch (Exception error)
         {
-            return StatusCode(500, $"Internal server error: {error.Message}");
+            return StatusCode(500, error.Message);
         }
     }
 
+    // Route to add new Recipe 
     [HttpPost]
-    public IActionResult AddRecipe([FromBody] RecipeDto recipeDto)
+    public async Task<IActionResult> AddRecipe([FromBody] RecipeDto recipeDto)
+    {
+        try
+        {
+            var resultMessage = await _recipeService.AddRecipe(recipeDto);
+            // Return a simple message instead of the created resource
+            return Created("", resultMessage); // Return 201 Created with a message
+        }
+        catch (Exception error)
+        {
+            return BadRequest($"Could not add recipe: {error.Message}"); // Improved error message
+        }
+    }
+
+    // Route for editing 
+    [HttpPut("editRecipe")]
+    public async Task<IActionResult> EditRecipe([FromBody] RecipeDto recipeDto)
     {
         if (!ModelState.IsValid)
         {
@@ -69,52 +82,31 @@ public class RecipeController : ControllerBase
         try
         {
             var recipe = _mapper.Map<Recipe>(recipeDto);
-            _recipeService.AddRecipe(recipe);
-            var createdRecipeDto = _mapper.Map<RecipeDto>(recipe);
-            return CreatedAtAction(nameof(GetRecipeById), new { id = recipe.RecipeId }, createdRecipeDto);
+            var updatedRecipe = await _recipeService.UpdateRecipe(recipe);
+            return Ok(updatedRecipe);
         }
-        catch (Exception error)
+        catch (Exception e)
         {
-            return BadRequest($"Could not add recipe: {error.Message}");
+            return BadRequest($"Could not edit recipe: {e.Message}");
         }
     }
 
-    [HttpPut("editRecipe/{id}")]
-    public IActionResult EditRecipe(int id, [FromBody] RecipeDto recipeDto)
-    {
-        if (id != recipeDto.RecipeId)
-        {
-            return BadRequest("Recipe ID mismatch");
-        }
-
-        if (!ModelState.IsValid)
-        {
-            return BadRequest(ModelState);
-        }
-
-        try
-        {
-            var recipe = _mapper.Map<Recipe>(recipeDto);
-            _recipeService.EditRecipe(recipe);
-            return Ok("Recipe updated successfully");
-        }
-        catch (Exception error)
-        {
-            return BadRequest($"Could not edit recipe: {error.Message}");
-        }
-    }
-    
+    // Route for deleting 
     [HttpDelete("deleteRecipe/{id}")]
-    public IActionResult DeleteRecipe(int id)
-    { 
+    public async Task<IActionResult> DeleteRecipe(int id)
+    {
         try
         {
-            _recipeService.DeleteRecipe(id);
-            return Ok("Recipe deleted successfully");
+            await _recipeService.DeleteRecipe(id);
+            return NoContent(); // 204 No Content
         }
-        catch (Exception error)
+        catch (KeyNotFoundException ex)
         {
-            return BadRequest($"Could not delete recipe: {error.Message}");
+            return NotFound(ex.Message); // 404 Not Found
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"Internal server error: {ex.Message}");
         }
     }
 }

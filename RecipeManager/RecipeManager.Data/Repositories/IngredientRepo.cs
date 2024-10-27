@@ -1,4 +1,5 @@
 namespace RecipeManager.Data; 
+using RecipeManager.Models; 
 using Microsoft.EntityFrameworkCore;  
 
 public class IngredientRepo : IIngredientRepo { 
@@ -26,7 +27,7 @@ public class IngredientRepo : IIngredientRepo {
         await _context.SaveChangesAsync();
         return ingredient;
     }
-    public async Task DeleteIngredientById(Ingredient ingredient){
+    public async Task DeleteIngredient(Ingredient ingredient){
         _context.Ingredients.Remove(ingredient);
         await _context.SaveChangesAsync();
     }

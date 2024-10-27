@@ -1,84 +1,111 @@
-using RecipeManager.API;
-using RecipeManager.Data;
 using RecipeManager.Models;
-using System;
+using RecipeManager.Models.DTOs;
+using RecipeManager.Data;
+using AutoMapper;
 using System.Collections.Generic;
-using System.Linq;
+using System.Threading.Tasks;
 
-namespace RecipeManager.API;
-
-public class RecipeService : IRecipeService
+namespace RecipeManager.API.Services
 {
-    private readonly IRecipeRepo _recipeRepo;
-
-    public RecipeService(IRecipeRepo recipeRepo)
+    public class RecipeService : IRecipeService
     {
-        _recipeRepo = recipeRepo ?? throw new ArgumentNullException(nameof(recipeRepo));
-    }
+        private readonly IRecipeRepo _recipeRepo;
+        private readonly IMapper _mapper;
 
-    public List<Recipe>? GetAllRecipes()
-    {
-        var recipes = _recipeRepo.GetAllRecipes();
-        return recipes.Any() ? recipes : null;
-    }
+        private readonly IIngredientService _ingredientService;
 
-    public Recipe? GetRecipeById(int id)
-    {
-        return _recipeRepo.GetRecipeById(id);
-    }
-
-    // Add new Recipe
-    public string AddRecipe(Recipe recipe)
-    {
-        if (!string.IsNullOrEmpty(recipe.Name))
+        public RecipeService(IRecipeRepo recipeRepo, IMapper mapper, IIngredientService ingredientService)
         {
-            _recipeRepo.AddRecipe(recipe);
-            return $"Recipe '{recipe.Name}' added successfully!";
+            _recipeRepo = recipeRepo ?? throw new ArgumentNullException(nameof(recipeRepo));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _ingredientService = ingredientService ?? throw new ArgumentNullException(nameof(mapper)); ;
         }
-        else
-        {
-            throw new ArgumentException("Invalid Recipe. Please provide a name!");
-        }
-    }
 
-    // Update Recipe
-    public Recipe EditRecipe(Recipe recipe)
-    {
-        var existingRecipe = _recipeRepo.GetRecipeById(recipe.RecipeId);
-        if (existingRecipe != null)
+        public async Task<List<Recipe>> GetAllRecipes()
         {
-            if (!string.IsNullOrEmpty(recipe.Name))
+            var recipes = await _recipeRepo.GetAllRecipes();
+            if (recipes == null || recipes.Count == 0)
             {
-                existingRecipe.Name = recipe.Name;
-                existingRecipe.Instructions = recipe.Instructions;
-                existingRecipe.CookingTime = recipe.CookingTime;
-                existingRecipe.Servings = recipe.Servings;
-                existingRecipe.Ingredients = recipe.Ingredients;
-
-                _recipeRepo.UpdateRecipe(existingRecipe);
-                return existingRecipe;
+                throw new Exception("No recipes found");
             }
-            else
+            return recipes;
+        }
+
+        public async Task<Recipe?> GetRecipeById(int id)
+        {
+            var recipe = await _recipeRepo.GetRecipeById(id);
+            return recipe;
+        }
+
+        public async Task<string> AddRecipe(RecipeDto recipeDto)
+        {
+            var recipe = _mapper.Map<Recipe>(recipeDto);
+            if (string.IsNullOrEmpty(recipe.Name))
             {
-                throw new ArgumentException("Invalid Recipe. Please provide a name!");
+                throw new Exception("Recipe Name required");
             }
+            return await _recipeRepo.AddRecipe(recipe);
         }
 
-        throw new KeyNotFoundException($"Recipe with id {recipe.RecipeId} does not exist.");
-    }
+        public async Task<Recipe> UpdateRecipe(Recipe recipe)
+        {
+            var searchedRecipe = await _recipeRepo.GetRecipeById(recipe.RecipeId);
+            if (searchedRecipe == null)
+            {
+                throw new KeyNotFoundException($"Recipe with id {recipe.RecipeId} not found");
+            }
 
-    // Delete Recipe
-    public string DeleteRecipe(int id)
-    {
-        var recipe = _recipeRepo.GetRecipeById(id);
-        if (recipe != null)
-        {
-            _recipeRepo.DeleteRecipe(recipe);
-            return $"Recipe with id {id} deleted successfully!";
+            if (string.IsNullOrEmpty(recipe.Name))
+            {
+                throw new ArgumentException("Invalid recipe. Please check name!");
+            }
+
+            // Update recipe properties
+            searchedRecipe.Name = recipe.Name;
+            searchedRecipe.Instructions = recipe.Instructions;
+            searchedRecipe.CookingTime = recipe.CookingTime;
+            searchedRecipe.Servings = recipe.Servings;
+
+            // Handle ingredients
+            searchedRecipe.Ingredients.Clear();
+            foreach (var ingredient in recipe.Ingredients)
+            {
+                searchedRecipe.Ingredients.Add(new Ingredient
+                {
+                    Name = ingredient.Name,
+                    Quantity = ingredient.Quantity,
+                    RecipeId = searchedRecipe.RecipeId
+                });
+            }
+
+            await _recipeRepo.UpdateRecipe(searchedRecipe);
+            return searchedRecipe;
         }
-        else
+
+        public async Task DeleteRecipe(int id)
         {
-            throw new KeyNotFoundException($"Recipe with id {id} does not exist");
+            var searchedRecipe = await _recipeRepo.GetRecipeById(id);
+            if (searchedRecipe == null)
+            {
+                throw new KeyNotFoundException($"Recipe with id {id} does not exist");
+            }
+
+            try
+            {
+                var ingredients = await _ingredientService.GetAllIngredients();
+                var recipeIngredients = ingredients.Where(i => i.RecipeId == id).ToList();
+
+                foreach (var ingredient in recipeIngredients)
+                {
+                    await _ingredientService.DeleteIngredient(ingredient.IngredientId);
+                }
+
+                await _recipeRepo.DeleteRecipe(searchedRecipe);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"An error occurred while deleting the recipe: {ex.Message}", ex);
+            }
         }
     }
 }

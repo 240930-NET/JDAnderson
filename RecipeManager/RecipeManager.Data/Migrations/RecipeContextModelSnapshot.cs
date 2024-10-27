@@ -21,7 +21,7 @@ namespace RecipeManager.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Ingredient", b =>
+            modelBuilder.Entity("RecipeManager.Models.Ingredient", b =>
                 {
                     b.Property<int>("IngredientId")
                         .ValueGeneratedOnAdd()
@@ -50,7 +50,7 @@ namespace RecipeManager.Data.Migrations
                         new
                         {
                             IngredientId = 1,
-                            Name = "Spaghetti",
+                            Name = "Noodles",
                             Quantity = "400g",
                             RecipeId = 1
                         },
@@ -163,12 +163,15 @@ namespace RecipeManager.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RecipeId"));
 
                     b.Property<string>("CookingTime")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Instructions")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Servings")
@@ -205,7 +208,7 @@ namespace RecipeManager.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Ingredient", b =>
+            modelBuilder.Entity("RecipeManager.Models.Ingredient", b =>
                 {
                     b.HasOne("RecipeManager.Models.Recipe", "Recipes")
                         .WithMany("Ingredients")

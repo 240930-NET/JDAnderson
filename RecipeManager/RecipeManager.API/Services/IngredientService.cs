@@ -1,23 +1,25 @@
-using RecipeManager.Models; 
-using RecipeManager.Data; 
-using RecipeManager.Models.DTOs; 
-using AutoMapper; 
+using RecipeManager.Models;
+using RecipeManager.Data;
+using RecipeManager.Models.DTOs;
+using AutoMapper;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
+namespace RecipeManager.API.Services;
 
-namespace RecipeManager.API.Services; 
+public class IngredientService : IIngredientService
+{
+    private readonly IIngredientRepo _ingredientRepo;
+    private readonly IMapper _mapper;
 
-public class IngredientService : IIngredientService 
-{ 
-    private readonly IIngredientRepo _ingredientRepo; 
-    private readonly IMapper _mapper; 
-
-    public IngredientService(IIngredientRepo ingredientRepo, IMapper mapper)  
+    public IngredientService(IIngredientRepo ingredientRepo, IMapper mapper)
     {
-        _ingredientRepo = ingredientRepo; 
-        _mapper = mapper; 
+        _ingredientRepo = ingredientRepo;
+        _mapper = mapper;
     }
 
-    public async Task<Ingredient> GetIngredientById(int id)
+    public async Task<Ingredient?> GetIngredientById(int id)
     {
         var ingredient = await _ingredientRepo.GetIngredientById(id);
 
@@ -26,11 +28,14 @@ public class IngredientService : IIngredientService
         {
             throw new Exception($"No ingredient found with id {id}");
         }
-        
-        return ingredient;
+
+        else
+        {
+            return ingredient;
+        }
     }
 
-    public async Task<List<Ingredient>> GetIngredients()
+    public async Task<List<Ingredient>> GetAllIngredients()
     {
         var allIngredients = await _ingredientRepo.GetAllIngredients() ?? new List<Ingredient>();
 
@@ -57,29 +62,35 @@ public class IngredientService : IIngredientService
         return await _ingredientRepo.AddIngredient(ingredient);
     }
 
-    public async Task<Ingredient> UpdateIngredient(Ingredient ingredient)
+    public async Task<Ingredient> UpdateIngredient(Ingredient ingredient) // Accepting Ingredient model
     {
+        // Validate that the ingredient exists and that its name is not null
         var existingIngredient = await _ingredientRepo.GetIngredientById(ingredient.IngredientId);
-        
-        // Validate the existing ingredient and its name
+
         if (existingIngredient == null || string.IsNullOrEmpty(ingredient.Name))
         {
-            throw new Exception("Invalid input!");
+            throw new Exception($"Invalid input! No ingredient found with id {ingredient.IngredientId} or name is null.");
         }
 
-        return await _ingredientRepo.UpdateIngredient(ingredient);
+
+        // Add any other properties you want to update
+
+        else
+        {
+            return await _ingredientRepo.UpdateIngredient(existingIngredient);
+        }
     }
 
     public async Task DeleteIngredient(int id)
     {
         var ingredient = await _ingredientRepo.GetIngredientById(id);
-        
+
         // Check if the ingredient was found before attempting to delete
         if (ingredient == null)
         {
             throw new Exception($"No ingredient found with id {id}");
         }
 
-        await _ingredientRepo.DeleteIngredientById(ingredient); // Assuming this method exists
+        await _ingredientRepo.DeleteIngredient(ingredient); // Assuming this method exists
     }
 }

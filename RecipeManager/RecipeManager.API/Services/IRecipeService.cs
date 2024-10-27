@@ -1,19 +1,16 @@
-namespace RecipeManager.API;
-using RecipeManager.Data; 
-using RecipeManager.Models; 
-using RecipeManager.Models.DTOs; 
-// additional layer between business logic and controllers and our data 
-public interface IRecipeService
+using RecipeManager.Models;
+using RecipeManager.Models.DTOs;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace RecipeManager.API.Services
 {
-    List<Recipe>? GetAllRecipes();
-    Recipe? GetRecipeById(int id);
-
-     // Add new Recipe
-    public string AddRecipe(Recipe recipe);
-
-    // Update Recipe
-    public Recipe EditRecipe(Recipe recipe);
-
-    // Delete Recipe
-    public string DeleteRecipe(int id);
+    public interface IRecipeService
+    {
+        Task<List<Recipe>> GetAllRecipes();
+        Task<Recipe?> GetRecipeById(int id);
+        Task<string> AddRecipe(RecipeDto recipeDto);
+        Task<Recipe> UpdateRecipe(Recipe recipe);
+        Task DeleteRecipe(int id);
+    }
 }

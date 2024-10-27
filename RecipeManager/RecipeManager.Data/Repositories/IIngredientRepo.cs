@@ -1,16 +1,14 @@
-namespace RecipeManager.Data;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using RecipeManager.Models;
-public interface IIngredientRepo
+using RecipeManager.Models.DTOs;
+
+namespace RecipeManager.Data
 {
-
-    Task<List<Ingredient>>? GetAllIngredients();
-
-    Task<Ingredient>? GetIngredientById(int id);
-
-    public Task<Ingredient> AddIngredient(Ingredient ingredient);
-    public Task<Ingredient> UpdateIngredient(Ingredient ingredient);
-    public Task DeleteIngredientById(Ingredient ingredient); // return void
-
+    public interface IIngredientRepo
+    {
+        Task<List<Ingredient>> GetAllIngredients(); // Get all ingredients
+        Task<Ingredient>? GetIngredientById(int id); // Get an ingredient by ID
+        Task<Ingredient> AddIngredient(Ingredient ingredient); // Accept IngredientDto for adding
+        Task<Ingredient> UpdateIngredient(Ingredient ingredient); // Accept IngredientDto for updating
+        Task DeleteIngredient(Ingredient ingredient); // Accept ID for deleting an ingredient
+    }
 }
