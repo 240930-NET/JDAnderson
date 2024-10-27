@@ -13,13 +13,15 @@ namespace RecipeManager.API.Services
         private readonly IMapper _mapper;
 
         private readonly IIngredientService _ingredientService;
+        private readonly ILogger<RecipeService> _logger;
 
-        public RecipeService(IRecipeRepo recipeRepo, IMapper mapper, IIngredientService ingredientService)
+        public RecipeService(IRecipeRepo recipeRepo, IIngredientService ingredientService, ILogger<RecipeService> logger)
         {
-            _recipeRepo = recipeRepo ?? throw new ArgumentNullException(nameof(recipeRepo));
-            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
-            _ingredientService = ingredientService ?? throw new ArgumentNullException(nameof(mapper)); ;
+            _recipeRepo = recipeRepo;
+            _ingredientService = ingredientService;
+            _logger = logger;
         }
+
 
         public async Task<List<Recipe>> GetAllRecipes()
         {
@@ -97,13 +99,29 @@ namespace RecipeManager.API.Services
 
                 foreach (var ingredient in recipeIngredients)
                 {
-                    await _ingredientService.DeleteIngredient(ingredient.IngredientId);
+                    try
+                    {
+                        await _ingredientService.DeleteIngredient(ingredient.IngredientId);
+                    }
+                    catch (KeyNotFoundException ex)
+                    {
+                        // Log that the ingredient was not found, but continue with the deletion
+                        _logger.LogWarning($"Ingredient with ID {ingredient.IngredientId} not found during recipe deletion: {ex.Message}");
+                    }
+                    catch (Exception ex)
+                    {
+                        // Log any other unexpected errors during ingredient deletion
+                        _logger.LogError($"Error deleting ingredient with ID {ingredient.IngredientId}: {ex.Message}");
+                        throw new Exception($"An error occurred while deleting an ingredient: {ex.Message}", ex);
+                    }
                 }
 
                 await _recipeRepo.DeleteRecipe(searchedRecipe);
+                _logger.LogInformation($"Recipe with ID {id} and its ingredients successfully deleted");
             }
             catch (Exception ex)
             {
+                _logger.LogError($"Error deleting recipe with ID {id}: {ex.Message}");
                 throw new Exception($"An error occurred while deleting the recipe: {ex.Message}", ex);
             }
         }
