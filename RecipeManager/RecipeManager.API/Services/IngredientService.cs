@@ -50,13 +50,18 @@ public class IngredientService : IIngredientService
 
     public async Task<Ingredient> AddIngredient(IngredientDto ingredientDto)
     {
+        if (ingredientDto == null)
+        {
+            throw new ArgumentNullException(nameof(ingredientDto));
+        }
+
         // Convert from IngredientDto to Ingredient using AutoMapper
         var ingredient = _mapper.Map<Ingredient>(ingredientDto);
 
         // Validate the ingredient name
         if (string.IsNullOrEmpty(ingredient.Name))
         {
-            throw new Exception("Ingredient name is required");
+            throw new ArgumentException("Ingredient name is required");
         }
 
         return await _ingredientRepo.AddIngredient(ingredient);

@@ -36,17 +36,22 @@ namespace RecipeManager.API.Services
 
         public async Task<Recipe?> GetRecipeById(int id)
         {
-            var recipe = await _recipeRepo.GetRecipeById(id); 
-            return recipe; 
+            var recipe = await _recipeRepo.GetRecipeById(id);
+            return recipe;
         }
         public async Task<string> AddRecipe(RecipeDto recipeDto)
         {
-            var recipe = _mapper.Map<Recipe>(recipeDto); // This will map the DTO to the Recipe model
-
-            if (string.IsNullOrEmpty(recipe.Name))
+            if (recipeDto == null)
             {
-                throw new Exception("Recipe Name required");
+                throw new ArgumentNullException(nameof(recipeDto));
             }
+
+            if (string.IsNullOrEmpty(recipeDto.Name))
+            {
+                throw new ArgumentException("Recipe Name is required", nameof(recipeDto.Name));
+            }
+
+            var recipe = _mapper.Map<Recipe>(recipeDto);
 
             // Call the repository method to add the recipe
             return await _recipeRepo.AddRecipe(recipe);
