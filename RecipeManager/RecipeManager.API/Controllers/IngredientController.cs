@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using AutoMapper;
 using RecipeManager.Models;
 using RecipeManager.API.Services;
 using RecipeManager.Models.DTOs; // Ensure this namespace is included
@@ -10,10 +11,12 @@ namespace RecipeManager.API.Controllers;
 public class IngredientController : ControllerBase
 {
     private readonly IIngredientService _ingredientService;
+    private readonly IMapper _mapper;
 
-    public IngredientController(IIngredientService ingredientService)
+    public IngredientController(IIngredientService ingredientService, IMapper mapper)
     {
         _ingredientService = ingredientService;
+        _mapper = mapper;
     }
 
     [HttpGet]
@@ -63,32 +66,24 @@ public class IngredientController : ControllerBase
     }
 
     [HttpPut("editIngredient")]
-    public async Task<IActionResult> UpdateIngredient([FromBody] Ingredient ingredient) // Changed to IngredientDto
+    public async Task<IActionResult> UpdateIngredient([FromBody] IngredientUpdateDto ingredientDto)
     {
-       
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
 
         try
         {
-            var updatedIngredient = await _ingredientService.UpdateIngredient(ingredient); // Use DTO for updating
+            var ingredient = _mapper.Map<Ingredient>(ingredientDto);
+            var updatedIngredient = await _ingredientService.UpdateIngredient(ingredient);
             return Ok(updatedIngredient);
         }
         catch (Exception e)
         {
-            return BadRequest(e.Message);
+            return BadRequest($"Could not update ingredient: {e.Message}");
         }
     }
 
-    [HttpDelete("deleteIngredient/{id}")]
-    public async Task<IActionResult> DeleteIngredient(int id)
-    {
-        try
-        {
-            await _ingredientService.DeleteIngredient(id);
-            return Ok(); // Return 204 No Content on successful deletion
-        }
-        catch (Exception e)
-        {
-            return BadRequest(e.Message);
-        }
-    }
+    
 }

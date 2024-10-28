@@ -72,7 +72,7 @@ public class RecipeController : ControllerBase
 
     // Route for editing 
     [HttpPut("editRecipe")]
-    public async Task<IActionResult> EditRecipe([FromBody] RecipeDto recipeDto)
+    public async Task<IActionResult> EditRecipe([FromBody] RecipeUpdateDto recipeUpdateDto)
     {
         if (!ModelState.IsValid)
         {
@@ -81,7 +81,7 @@ public class RecipeController : ControllerBase
 
         try
         {
-            var recipe = _mapper.Map<Recipe>(recipeDto);
+            var recipe = _mapper.Map<Recipe>(recipeUpdateDto);
             var updatedRecipe = await _recipeService.UpdateRecipe(recipe);
             return Ok(updatedRecipe);
         }
@@ -90,7 +90,6 @@ public class RecipeController : ControllerBase
             return BadRequest($"Could not edit recipe: {e.Message}");
         }
     }
-
     // Route for deleting 
     [HttpDelete("deleteRecipe/{id}")]
     public async Task<IActionResult> DeleteRecipe(int id)
