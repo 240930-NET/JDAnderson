@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RecipeManager.Data")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+825c20fbc41ca8e6082450f8e041ac95157d3d6a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+572ebbb523f06ab0f2ac7c9ae6523089844986bb")]
 [assembly: System.Reflection.AssemblyProductAttribute("RecipeManager.Data")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RecipeManager.Data")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
