@@ -1,10 +1,10 @@
 using AutoMapper;
 using RecipeManager.Models.DTOs;
-using RecipeManager.Models;
+
 
 namespace RecipeManager.Models;
 
-public class MappingProfile : Profile
+public class MAAappingProfile : Profile
 {
     public MappingProfile()
     {

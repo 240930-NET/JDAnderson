@@ -8,31 +8,31 @@ body {
 /* Navigation Bar Styles */
 nav {
     z-index: 3;
-    padding: 10px; /* Padding around the nav */
-    background-color: lightblue; /* Semi-transparent background */
-    position: relative; /* Ensure positioning for z-index */
+    padding: 10px;
+    background-color: lightblue;
 }
 
 nav ul {
-    list-style-type: none; /* Remove bullet points */
-    margin: 0; /* Remove default margin */
-    padding: 0; /* Remove default padding */
-    display: flex; /* Use flexbox for horizontal layout */
-    justify-content: space-between;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 nav ul li {
-    margin-right: 20px; /* Space between items */
+    margin-right: 20px;
 }
 
 nav ul li a {
-    color: white; /* Text color */
-    text-decoration: none; /* Remove underline from links */
-    font-family: 'Libre Franklin', sans-serif; /* Font family */
+    color: white;
+    text-decoration: none;
+    font-family: 'Libre Franklin', sans-serif;
 }
 
 nav ul li a:hover {
-    text-decoration: underline; /* Underline on hover */
+    text-decoration: underline;
 }
 
 /* Hero Section Styles */
@@ -41,6 +41,7 @@ nav ul li a:hover {
 }
 
 .hero-content {
+    margin: auto;
     background-image: url('./images/camera2.jpg');
     background-size: cover;
     background-repeat: no-repeat;
@@ -48,8 +49,14 @@ nav ul li a:hover {
     width: 100%;
     height: 100vh;
     display: flex;
+    flex-direction: column;
+    /* Stack items vertically */
     justify-content: center;
+    /* Center items vertically */
     align-items: center;
+    /* Center items horizontally */
+    text-align: center;
+    /* Center text within the flex items */
 }
 
 .hero::before {
@@ -63,26 +70,93 @@ nav ul li a:hover {
     background-color: rgba(100, 20, 0, 0.4);
 }
 
-/* Additional Content Styles */ 
-.additionalContent { 
+/* Additional Content Styles */
+.additionalContent {
     font-family: "Roboto Slab", serif;
     font-weight: 400;
     font-style: normal;
     background-color: rgb(168, 168, 230);
-    color: white; 
-    padding: 50px; 
+    color: white;
+    padding: 50px;
 }
 
-/* Additional Content Paragraph Styles */ 
-.additionalContent p { 
-   font-size: 1.5em; /* Ensure correct unit for font size */
+/* Additional Content Paragraph Styles */
+.additionalContent p {
+    font-size: 1.5em;
+    /* Ensure correct unit for font size */
 }
 
-/* Hero Content Header Styles */ 
+@keyframes appear {
+    from {
+        opacity: 0;
+        font-size: 1em;
+        /* Adjust as needed */
+    }
+
+    to {
+        opacity: 1;
+        font-size: 3em;
+        /* Adjust as needed */
+    }
+}
+
+/* Jumping Animation for Letters/Words */
+@keyframes jumpLetter {
+    from {
+        transform: translateY(0);
+        opacity: 0;
+        /* Start invisible */
+    }
+
+    to {
+        transform: translateY(-20px);
+        opacity: 1;
+        /* Fade in */
+    }
+}
+
+@keyframes hoverHeader {
+
+    0%,
+    20%,
+    50%,
+    80%,
+    100% {
+        transform: translateY(0);
+    }
+
+    40% {
+        transform: translateY(-30px);
+    }
+}
+
+/* Hero Content Header Styles */
 .hero-content header {
-   font-family: "Roboto Slab", serif;
-   font-weight: 400;
-   font-size: 3em;
-   color: white;
-   z-index: 2; /* Ensure header is above hero content */
+    margin: 0;
+    font-family: "Roboto Slab", serif;
+    font-weight: 400;
+    font-size: 3em;
+    color: white;
+    width: 60%;
+    z-index: 2;
+    /* Ensure header is above hero content */
+
+    /* Animation for the header itself */
+    animation: appear 1.5s ease-in forwards;
+}
+
+/* Span styles for characters and words */
+.hero-content header span {
+    display: inline-block;
+    opacity: 0;
+    /* Start invisible */
+    animation-fill-mode: forwards;
+    /* Keep the last keyframe state */
+}
+
+.hovered {
+    animation: hoverAnimation 0.5s ease-in-out;
+    /* Trigger animation */
+    color: blue;
+    /* Change text color on hover */
 }
