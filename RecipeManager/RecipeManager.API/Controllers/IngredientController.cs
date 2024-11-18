@@ -10,80 +10,76 @@ namespace RecipeManager.API.Controllers;
 [Route("api/[controller]")]
 public class IngredientController : ControllerBase
 {
-    private readonly IIngredientService _ingredientService;
-    private readonly IMapper _mapper;
+	private readonly IIngredientService _ingredientService;
+	private readonly IMapper _mapper;
 
-    public IngredientController(IIngredientService ingredientService, IMapper mapper)
-    {
-        _ingredientService = ingredientService;
-        _mapper = mapper;
-    }
+	public IngredientController(IIngredientService ingredientService, IMapper mapper)
+	{
+		_ingredientService = ingredientService;
+		_mapper = mapper;
+	}
 
-    [HttpGet]
-    public async Task<IActionResult> GetAllIngredients()
-    {
-        try
-        {
-            var ingredients = await _ingredientService.GetAllIngredients();
-            return Ok(ingredients);
-        }
-        catch (Exception e)
-        {
-            return BadRequest(e.Message);
-        }
-    }
 
-    [HttpGet("getIngredientById/{id}")]
-    public async Task<IActionResult> GetIngredientById(int id)
-    {
-        try
-        {
-            var ingredient = await _ingredientService.GetIngredientById(id);
-            if (ingredient == null)
-            {
-                return NotFound($"No ingredient found with id {id}"); // Improved not found message
-            }
-            return Ok(ingredient);
-        }
-        catch (Exception e)
-        {
-            return BadRequest(e.Message);
-        }
-    }
 
-    [HttpPost]
-    public async Task<IActionResult> AddIngredient([FromBody] IngredientDto ingredientDto)
-    {
-        try
-        {
-            var addedIngredient = await _ingredientService.AddIngredient(ingredientDto);
-            return Ok(ingredientDto);
-        }
-        catch (Exception e)
-        {
-            return BadRequest(e.Message);
-        }
-    }
 
-    [HttpPut("editIngredient")]
-    public async Task<IActionResult> UpdateIngredient([FromBody] IngredientUpdateDto ingredientDto)
-    {
-        if (!ModelState.IsValid)
-        {
-            return BadRequest(ModelState);
-        }
+	[HttpPost("addMultiple/{recipeId}")]
+	public async Task<IActionResult> AddMultipleIngredients(int recipeId, [FromBody] List<IngredientDto> ingredients)
+	{
+		try
+		{
+			// Call the service method with recipeId and ingredients
+			var addedIngredients = await _ingredientService.AddMultipleIngredients(recipeId, ingredients);
+			return Ok(_mapper.Map<List<IngredientDto>>(addedIngredients));
+		}
+		catch (ArgumentException e)
+		{
+			return BadRequest(e.Message);
+		}
+		catch (Exception e)
+		{
+			// Log the exception
+			return StatusCode(500, "An error occurred while processing your request.");
+		}
+	}
+	[HttpPut("editIngredients/{recipeId}")]
+	public async Task<IActionResult> UpdateMultipleIngredients(int recipeId, [FromBody] List<IngredientUpdateDto> ingredients)
+	{
+		if (!ModelState.IsValid)
+		{
+			return BadRequest(ModelState);
+		}
 
-        try
-        {
-            var ingredient = _mapper.Map<Ingredient>(ingredientDto);
-            var updatedIngredient = await _ingredientService.UpdateIngredient(ingredient);
-            return Ok(updatedIngredient);
-        }
-        catch (Exception e)
-        {
-            return BadRequest($"Could not update ingredient: {e.Message}");
-        }
-    }
+		try
+		{
+			// Ensure that the ingredients list is not null or empty
+			if (ingredients == null || !ingredients.Any())
+			{
+				return BadRequest("No ingredients provided.");
+			}
 
-    
+			var updatedIngredients = new List<Ingredient>();
+
+			foreach (var ingredientDto in ingredients)
+			{
+				// Map DTO to Ingredient entity
+				var ingredient = _mapper.Map<Ingredient>(ingredientDto);
+				ingredient.RecipeId = recipeId; // Set the Recipe ID from the route parameter
+
+				// Call service method to update each ingredient
+				var updatedIngredient = await _ingredientService.UpdateIngredient(ingredient);
+				updatedIngredients.Add(updatedIngredient);
+			}
+
+			return Ok(updatedIngredients); // Return the list of updated ingredients
+		}
+		catch (KeyNotFoundException e)
+		{
+			return NotFound(e.Message); // Handle not found case for any ingredient
+		}
+		catch (Exception e)
+		{
+			return BadRequest($"Could not update ingredients: {e.Message}"); // Handle other exceptions
+		}
+	}
+
 }

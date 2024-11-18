@@ -4,7 +4,7 @@ using RecipeManager.Models.DTOs;
 
 namespace RecipeManager.Models;
 
-public class MAAappingProfile : Profile
+public class MappingProfile : Profile
 {
     public MappingProfile()
     {

@@ -4,6 +4,6 @@ namespace RecipeManager.Models.DTOs
     {
         public required string Name { get; set; }
         public required string Quantity { get; set; }
-        public int RecipeId { get; set; } // Foreign key to associate with a recipe
+       
     }
 }
